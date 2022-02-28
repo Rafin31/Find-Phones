@@ -31,11 +31,19 @@
         <div class="searchBarWrapper input-group">
             <input type="text" class="form-control" id="searchField" placeholder="Search Mobile">
             <div class="input-group-append">
-                <button class="btn btn-dark w-100" type="button" id="searchButton">Search</button>
+                <button class="btn btn-dark w-100" onclick="searchButtonPress()" type="button"
+                    id="searchButton">Search</button>
             </div>
         </div>
+    </section>
 
+    <section class="container spinner d-flex justify-content-center flex-column align-items-center">
+        <div id="spinner" style="display: none;" class="spinner-grow spinnerWrapper" role="status">
+        </div>
+    </section>
 
+    <section id="searchResultWrapper" class="searchResults">
+        <!-- Search results will show here  -->
     </section>
 
 
