@@ -45,7 +45,9 @@ const noResultFOund = () => {
 const fetchResponse = (response, status) => {
     spinnerShow('none')
     if (status) {
+        console.log(response);
         searchResultWrapper.innerText = " "
+        pohone_details.innerText = " "
         const div = document.createElement('div');
         div.classList.add('row', "gy-3", "gx-3")
         for (const index in response) {
@@ -90,9 +92,140 @@ const fetchResponse = (response, status) => {
 const fetchPhoneDetails = phoneId => {
     fetch(`https://openapi.programming-hero.com/api/phone/${phoneId}`)
         .then(res => res.json())
-        .then(data => showPhoneDetails(data))
+        .then(data => showPhoneDetails(data.data, data.status))
 }
 
-const showPhoneDetails = (data) => {
-    console.log(data);
+const createTableRows = data => {
+
+    test = `
+    <tr>Test</tr>
+    <tr>Test</tr>
+    `
+    return test
 }
+
+const showPhoneDetails = (data, status) => {
+    if (status) {
+        pohone_details.innerText = " "
+        console.log(data);
+        const div = document.createElement('div');
+        div.classList.add('col-12');
+
+        for (const info in data) {
+            div.innerHTML = `
+            <div class="card rounded-lg p-2">
+                <div class="row">
+               
+                    <img src="${data.image}" class="card-img-top img-fluid w-50 w-lg-25 mx-auto">
+                    <h4 class="text-center mt-3">${data.name}</h4>
+               
+
+                    <div class="row pt-3">
+                    <div class="col-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Specification</th>
+                                    <th scope="col">Details</th>
+                                </tr>
+                            </thead>
+    
+                            <tbody>
+                                <tr>
+                                    <td>Brand</td>
+                                    <td>${data.brand}</td>
+                                </tr>
+                                <tr>
+                                    <td>Release Date</td>
+                                    <td>${data?.releaseDate || "No release Date Found"}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h5 class="text-center">Main Features</h5>
+
+                        <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Specification</th>
+                                <th scope="col">Details</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Chip Set</td>
+                                <td>${data?.mainFeatures?.chipSet}</td>
+                            </tr>
+                            <tr>
+                                <td>Display Size</td>
+                                <td>${data?.mainFeatures?.displaySize}</td>
+                            </tr>
+                            <tr>
+                                <td>Memory</td>
+                                <td>${data?.mainFeatures?.memory}</td>
+                            </tr>
+                            <tr>
+                                <td>Storage</td>
+                                <td>${data?.mainFeatures?.storage}</td>
+                            </tr>
+                            <tr>
+                                <td>Sensors</td>
+                                <td>${data?.mainFeatures?.sensors.map(data => `<li>${data}</li>`).join(" ")}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h5 class="text-center">Others</h5>
+
+                    <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Specification</th>
+                            <th scope="col">Details</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Bluetooth</td>
+                            <td>${data?.others?.Bluetooth}</td>
+                        </tr>
+                        <tr>
+                            <td>GPS</td>
+                            <td>${data?.others?.GPS}</td>
+                        </tr>
+                        <tr>
+                            <td>NFC</td>
+                            <td>${data?.others?.NFC}</td>
+                        </tr>
+                        <tr>
+                            <td>Radio</td>
+                            <td>${data?.others?.Radio}</td>
+                        </tr>
+                        <tr>
+                            <td>USB</td>
+                            <td>${data?.others?.USB}</td>
+                        </tr>
+                        <tr>
+                            <td>WLAN</td>
+                            <td>${data?.others?.WLAN}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                    </div>
+                </div>
+                
+               
+            </div>
+            `
+        }
+
+        pohone_details.appendChild(div);
+        window.scrollTo({
+            top: 100,
+            left: 100,
+            behavior: 'smooth'
+        });
+    }
+}
+
